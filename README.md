@@ -4,8 +4,6 @@ A Python network tool that retrieves comprehensive IP address information using 
 
 **Project Activity 3 – Social Coding** | October 2025
 
----
-
 ## Quick Start
 
 ### Prerequisites
@@ -30,8 +28,6 @@ ABSTRACT_API_KEY=your_api_key_here
 python src/main.py
 ```
 
----
-
 ## Features
 
 - **IPv4/IPv6 Detection** - Automatically identifies your public IP address
@@ -42,8 +38,6 @@ python src/main.py
 - **Specific IP Lookup** - Search any IPv4/IPv6 address
 - **Export Results** - Save to JSON or text files
 - **Color-Coded Display** - Easy-to-read terminal output
-
----
 
 ## Usage
 
@@ -56,8 +50,6 @@ Run the application and choose from the menu:
 5. **Test API Connection** - Verify API setup
 6. **Exit Application**
 
----
-
 ## Project Requirements
 
 This project fulfills Project Activity 3 requirements:
@@ -68,8 +60,6 @@ This project fulfills Project Activity 3 requirements:
 - User-friendly output formatting
 - GitHub collaboration workflow
 - Comprehensive documentation
-
----
 
 ## Future Enhancements
 
