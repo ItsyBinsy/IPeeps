@@ -205,8 +205,8 @@ class IPInfoApp:
     def exit_application(self):
         """Exit the application gracefully."""
         print(f"\n{Fore.CYAN}{'=' * 80}")
-        print(f"{Fore.CYAN}Thank you for using IP Address Information Application!")
-        print(f"{Fore.LIGHTBLACK_EX}Developed by [Your Team Name] | DEVASC Project 2025")
+        print(f"{Fore.CYAN}Thank you for using IPeeps!")
+        print(f"{Fore.LIGHTBLACK_EX}Developed by Group 3 - 4ITH")
         print(f"{Fore.CYAN}{'=' * 80}{Style.RESET_ALL}\n")
         self.running = False
 

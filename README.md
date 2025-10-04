@@ -16,8 +16,8 @@ A Python network tool that retrieves comprehensive IP address information using 
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/YOUR-USERNAME/ipv4-ipv6-address-app.git
-cd ipv4-ipv6-address-app
+git clone https://github.com/ItsyBinsy/IPeeps.git
+cd IPeeps
 
 # 2. Install dependencies
 pip install requests python-dotenv colorama tabulate
