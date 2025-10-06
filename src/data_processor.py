@@ -141,26 +141,6 @@ class DataProcessor:
         }
     
     @staticmethod
-    def extract_flag_info(data: Dict) -> Dict[str, str]:
-        """
-        Extract country flag information.
-        
-        Args:
-            data (dict): Raw API response data
-        
-        Returns:
-            dict: Structured flag information
-        """
-        flag = data.get('flag', {})
-        
-        return {
-            'Flag Emoji': flag.get('emoji', 'N/A'),
-            'Flag Unicode': flag.get('unicode', 'N/A'),
-            'Flag PNG': flag.get('png', 'N/A'),
-            'Flag SVG': flag.get('svg', 'N/A')
-        }
-    
-    @staticmethod
     def process_all_data(data: Dict) -> Dict[str, Dict]:
         """
         Process all available data from API response.
@@ -180,8 +160,7 @@ class DataProcessor:
             'connection': DataProcessor.extract_connection_info(data),
             'timezone': DataProcessor.extract_timezone_info(data),
             'security': DataProcessor.extract_security_info(data),
-            'currency': DataProcessor.extract_currency_info(data),
-            'flag': DataProcessor.extract_flag_info(data)
+            'currency': DataProcessor.extract_currency_info(data)
         }
     
     @staticmethod

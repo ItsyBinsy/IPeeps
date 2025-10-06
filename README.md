@@ -1,71 +1,110 @@
 # IPeeps
 
-A Python network tool that retrieves comprehensive IP address information using Abstract API.
+A Flask-based web application that retrieves detailed IPv4 and IPv6 information using the Abstract API.
 
-**Project Activity 3 – Social Coding** | October 2025
+**Project Activity 3 – Social Coding | October 2025**
+**Developed by Group 3 – 4ITH**
 
-## Quick Start
+---
 
-### Prerequisites
-- Python 3.9+
-- Abstract API key (free at [abstractapi.com](https://www.abstractapi.com/))
+## Overview
 
-### Installation
+**IPeeps** is a Python web tool that simplifies network intelligence. It retrieves comprehensive information about any IPv4 or IPv6 address, including geolocation, ISP, security, timezone, and currency details.
+Built with Flask and the Abstract API, the system demonstrates REST API integration, data parsing, error handling, and clean UI presentation — all aligned with modern web development standards.
 
-```bash
-# 1. Clone repository
-git clone https://github.com/ItsyBinsy/IPeeps.git
-cd IPeeps
-
-# 2. Install dependencies
-pip install requests python-dotenv colorama tabulate
-
-# 3. Add your API key
-# Create .env file and add:
-ABSTRACT_API_KEY=your_api_key_here
-
-# 4. Run
-python src/main.py
-```
+---
 
 ## Features
 
-- **IPv4/IPv6 Detection** - Automatically identifies your public IP address
-- **Geolocation** - City, region, country, coordinates
-- **ISP Information** - Provider name, ASN, organization
-- **Security Analysis** - VPN, Proxy, Tor detection
-- **Timezone & Currency** - Local time and currency info
-- **Specific IP Lookup** - Search any IPv4/IPv6 address
-- **Export Results** - Save to JSON or text files
-- **Color-Coded Display** - Easy-to-read terminal output
+* **IPv4 & IPv6 Lookup** – Retrieve data for any valid IP address.
+* **Geolocation Data** – Displays country, region, city, latitude, and longitude.
+* **ISP & ASN Information** – Shows provider, organization, and connection details.
+* **Security Insights** – Detects VPN, proxy, Tor, or relay usage.
+* **Timezone & Currency Data** – Includes GMT offset, local time, and national currency.
+* **Export Options** – Save lookup results as JSON or text files.
+* **Error Handling** – Displays “N/A” instead of null for missing values.
+* **Clean, Responsive UI** – Web interface with a terminal-inspired design.
 
-## Usage
+---
 
-Run the application and choose from the menu:
+## System Requirements
 
-1. **Get Current IP Information** - View your public IP details
-2. **Lookup Specific IP Address** - Search any IP (e.g., `8.8.8.8`)
-3. **Display in Table Format** - View results as a table
-4. **Save Last Result to File** - Export to JSON/text
-5. **Test API Connection** - Verify API setup
-6. **Exit Application**
+* **Python:** Version 3.9 or higher
+* **Flask:** 2.0+
+* **Requests:** 2.31+
+* **python-dotenv:** 1.0+
+* Internet connection (for API access)
 
-## Project Requirements
+---
 
-This project fulfills Project Activity 3 requirements:
-- REST API integration (Abstract API)
-- IPv4/IPv6 address retrieval
-- Geolocation and ISP information
-- Error handling
-- User-friendly output formatting
-- GitHub collaboration workflow
-- Comprehensive documentation
+## Installation and Setup
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/ItsyBinsy/IPeeps.git
+   cd IPeeps
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure API Key**
+   Create a `.env` file in the project root directory and add:
+
+   ```
+   ABSTRACT_API_KEY=your_api_key_here
+   ```
+
+4. **Run the Application**
+
+   ```bash
+   python app.py
+   ```
+
+5. **Access the Web Interface**
+   Open your browser and navigate to:
+
+   ```
+   http://127.0.0.1:5000
+   ```
+
+---
+
+## API Reference
+
+**Provider:** [Abstract API - IP Geolocation & Threat Intelligence](https://www.abstractapi.com/ip-geolocation-api)
+**Data Retrieved:**
+
+* IP version, address, continent, country, region, city
+* ISP, ASN, organization, connection type
+* VPN, proxy, relay, and Tor detection
+* Timezone name, abbreviation, and offset
+* Currency name, code, and symbol
+
+---
+
+## Error Handling
+
+* Invalid IP formats trigger on-screen alerts.
+* Null or missing data is displayed as “N/A”.
+* Network and API errors are caught gracefully with user feedback.
+
+---
 
 ## Future Enhancements
 
-- Subnet calculator
-- IP history tracking
-- Batch IP lookup from CSV
-- GUI interface
-- Database integration
-- Geolocation map visualization
+* **Mini Weather Widget** – Display real-time weather for the IP’s detected city using a free weather API.
+* **Country Mood Background** – Dynamically adapt the background color or gradient based on country code.
+* **Human-Readable Summary** – Generate a concise, natural-language description of lookup results.
+* **Custom Result Themes by Country** – Apply distinct accent colors or highlight schemes per country.
+* **Embed Google Maps** – Integrate a visual map pinpointing the geolocation of the IP.
+* **Dark/Light Theme Toggle** – Allow users to switch between light and dark interface modes.
+* **Auto-Detect Current IP** – Automatically retrieve and display the user’s public IP information on load.
+* **Free Trivia API Integration** – Show short trivia facts about countries or IPs for engagement.
+* **Privacy Checker** – Indicate if an IP shows signs of VPN, proxy, or possible tracking exposure.
+* **Network Speed Simulator** – Simulate connection speeds to demonstrate network conditions.
+

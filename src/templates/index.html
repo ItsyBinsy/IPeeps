@@ -22,7 +22,7 @@
             </div>
 
             <div class="input-group">
-                <input type="text" id="ipInput" placeholder="&gt; Enter IPv4 or IPv6 address" />
+                <input type="text" id="ipInput" placeholder="&gt; Enter IPv4 or IPV6 address - Press Enter" />
                 <button class="btn btn-secondary" onclick="lookupIP()">[ Lookup ]</button>
             </div>
         </section>
@@ -66,15 +66,10 @@
                 <div id="currencyInfo" class="info-grid"></div>
             </div>
 
-            <!-- Flag Info -->
-            <div class="section">
-                <div class="section-title">[ Country Flag ]</div>
-                <div id="flagInfo"></div>
-            </div>
-
             <div class="export-buttons">
                 <button class="btn btn-success" onclick="exportJSON()">[ Export JSON ]</button>
                 <button class="btn btn-success" onclick="exportText()">[ Export Text ]</button>
+                <button class="btn btn-secondary" onclick="clearResults()">[ Clear Results ]</button>
             </div>
         </section>
     </main>

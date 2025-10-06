@@ -12,16 +12,16 @@ function hideLoading() {
 
 function showError(message) {
     const alert = document.getElementById('errorAlert');
-    alert.textContent = '> ERROR: ' + message;
+    alert.textContent = '> ' + message;
     alert.style.display = 'block';
-    setTimeout(() => alert.style.display = 'none', 5000);
+    setTimeout(() => alert.style.display = 'none', 10000);
 }
 
 function showSuccess(message) {
     const alert = document.getElementById('successAlert');
-    alert.textContent = '> SUCCESS: ' + message;
+    alert.textContent = '> ' + message;
     alert.style.display = 'block';
-    setTimeout(() => alert.style.display = 'none', 3000);
+    setTimeout(() => alert.style.display = 'none', 10000);
 }
 
 function hideAlerts() {
@@ -30,10 +30,20 @@ function hideAlerts() {
 }
 
 function createInfoItem(label, value, highlight = false) {
+    // normalize value before displaying
+    const safeValue =
+        value === null || value === undefined || value === '' || value === 'None'
+            ? 'N/A'
+            : value;
+
     return `
         <div class="info-item">
             <span class="info-label">${label}:</span>
-            <span class="info-value" style="${highlight ? 'color: #00ff41; font-weight: 700; text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);' : ''}">${value}</span>
+            <span class="info-value" style="${
+                highlight
+                    ? 'color: #00ff41; font-weight: 700; text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);'
+                    : ''
+            }">${safeValue}</span>
         </div>
     `;
 }
@@ -111,16 +121,16 @@ function displayResults(data) {
         `;
     }
 
-    // Flag
-    if (data.flag) {
-        const f = data.flag;
-        document.getElementById('flagInfo').innerHTML = `
-            <div style="text-align: center; padding: 20px;">
-                <div class="flag-emoji">${f['Flag Emoji']}</div>
-                <p style="margin-top: 10px; color: #00cc00;">Unicode: ${f['Flag Unicode']}</p>
-            </div>
-        `;
-    }
+    // Stagger section animations
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.animation = 'none';
+        setTimeout(() => {
+            section.style.opacity = '1';
+            section.style.animation = `fadeIn 0.4s ease-in ${index * 0.08}s forwards`;
+        }, 10);
+    });
 
     document.getElementById('results').style.display = 'block';
     showSuccess('Information retrieved successfully!');
@@ -144,11 +154,19 @@ async function getCurrentIP() {
 }
 
 function validateIPAddress(ip) {
-    // IPv4 only (pattern: 0-255.0-255.0-255.0-255)
-    const ipv4Pattern = /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/;
-    if (ipv4Pattern.test(ip)) return { valid: true, type: 'IPv4' };
-    return { valid: false, type: null };
+  // IPv4
+  const ipv4Pattern =
+    /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/;
+
+  // IPv6
+  const ipv6Pattern =
+    /^(([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{1,4}:){1,7}:|([0-9A-Fa-f]{1,4}:){1,6}:[0-9A-Fa-f]{1,4}|([0-9A-Fa-f]{1,4}:){1,5}(:[0-9A-Fa-f]{1,4}){1,2}|([0-9A-Fa-f]{1,4}:){1,4}(:[0-9A-Fa-f]{1,4}){1,3}|([0-9A-Fa-f]{1,4}:){1,3}(:[0-9A-Fa-f]{1,4}){1,4}|([0-9A-Fa-f]{1,4}:){1,2}(:[0-9A-Fa-f]{1,4}){1,5}|[0-9A-Fa-f]{1,4}:((:[0-9A-Fa-f]{1,4}){1,6})|:((:[0-9A-Fa-f]{1,4}){1,7}|:)|fe80:(:[0-9A-Fa-f]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9])|([0-9A-Fa-f]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9])?[0-9]))$/;
+
+  if (ipv4Pattern.test(ip)) return { valid: true, type: 'IPv4' };
+  if (ipv6Pattern.test(ip)) return { valid: true, type: 'IPv6' };
+  return { valid: false, type: null };
 }
+
 
 async function lookupIP() {
     const ip = document.getElementById('ipInput').value.trim();
@@ -156,7 +174,7 @@ async function lookupIP() {
 
     const validation = validateIPAddress(ip);
     if (!validation.valid) {
-        return showError('Invalid IPv4 format. Try e.g., 8.8.8.8 or 192.168.1.1');
+          return showError('Invalid IP address. Enter a valid IPv4 or IPv6 (e.g., 8.8.8.8 or 2001:4860:4860::8888).');
     }
 
     showLoading();
@@ -177,6 +195,13 @@ async function lookupIP() {
         hideLoading();
         showError('Network error: ' + e.message);
     }
+}
+
+function clearResults() {
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('ipInput').value = '';
+    currentData = null;
+    showSuccess('Results cleared');
 }
 
 function exportJSON() {
