@@ -5,14 +5,10 @@ A Flask-based web application that retrieves detailed IPv4 and IPv6 information 
 **Project Activity 3 – Social Coding | October 2025**
 **Developed by Group 3 – 4ITH**
 
----
-
 ## Overview
 
 **IPeeps** is a Python web tool that simplifies network intelligence. It retrieves comprehensive information about any IPv4 or IPv6 address, including geolocation, ISP, security, timezone, and currency details.
 Built with Flask and the Abstract API, the system demonstrates REST API integration, data parsing, error handling, and clean UI presentation — all aligned with modern web development standards.
-
----
 
 ## Features
 
@@ -25,8 +21,6 @@ Built with Flask and the Abstract API, the system demonstrates REST API integrat
 * **Error Handling** – Displays “N/A” instead of null for missing values.
 * **Clean, Responsive UI** – Web interface with a terminal-inspired design.
 
----
-
 ## System Requirements
 
 * **Python:** Version 3.9 or higher
@@ -34,8 +28,6 @@ Built with Flask and the Abstract API, the system demonstrates REST API integrat
 * **Requests:** 2.31+
 * **python-dotenv:** 1.0+
 * Internet connection (for API access)
-
----
 
 ## Installation and Setup
 
@@ -72,8 +64,6 @@ Built with Flask and the Abstract API, the system demonstrates REST API integrat
    http://127.0.0.1:5000
    ```
 
----
-
 ## API Reference
 
 **Provider:** [Abstract API - IP Geolocation & Threat Intelligence](https://www.abstractapi.com/ip-geolocation-api)
@@ -85,15 +75,11 @@ Built with Flask and the Abstract API, the system demonstrates REST API integrat
 * Timezone name, abbreviation, and offset
 * Currency name, code, and symbol
 
----
-
 ## Error Handling
 
 * Invalid IP formats trigger on-screen alerts.
 * Null or missing data is displayed as “N/A”.
 * Network and API errors are caught gracefully with user feedback.
-
----
 
 ## Future Enhancements
 
