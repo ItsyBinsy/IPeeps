@@ -1,6 +1,6 @@
 # IPeeps
 
-A Flask-based web application that retrieves detailed IPv4 and IPv6 information using the Abstract API.
+A Python web application that retrieves comprehensive IPv4 and IPv6 information using the Abstract API.
 
 **Project Activity 3 – Social Coding | October 2025**
 **Developed by Group 3 – 4ITH**
@@ -8,7 +8,24 @@ A Flask-based web application that retrieves detailed IPv4 and IPv6 information 
 ## Overview
 
 **IPeeps** is a Python web tool that simplifies network intelligence. It retrieves comprehensive information about any IPv4 or IPv6 address, including geolocation, ISP, security, timezone, and currency details.
-Built with Flask and the Abstract API, the system demonstrates REST API integration, data parsing, error handling, and clean UI presentation — all aligned with modern web development standards.
+Built with Flask and the Abstract API, the system demonstrates REST API integration, data parsing, error handling, and clean UI presentation.
+
+## Quick Start
+
+**Prerequisites**
+
+* Python 3.9 or higher
+* Abstract API key (obtainable for free at [abstractapi.com](https://www.abstractapi.com))
+
+**Setup Steps**
+
+1. Clone the repository from GitHub.
+2. Install the required dependencies listed in `requirements.txt`.
+3. Create a `.env` file and add the line:
+   `ABSTRACT_API_KEY=your_api_key_here`
+4. Run the Flask application:
+   `python app.py`
+5. Open your web browser and navigate to `http://127.0.0.1:5000`
 
 ## Features
 
@@ -21,54 +38,11 @@ Built with Flask and the Abstract API, the system demonstrates REST API integrat
 * **Error Handling** – Displays “N/A” instead of null for missing values.
 * **Clean, Responsive UI** – Web interface with a terminal-inspired design.
 
-## System Requirements
-
-* **Python:** Version 3.9 or higher
-* **Flask:** 2.0+
-* **Requests:** 2.31+
-* **python-dotenv:** 1.0+
-* Internet connection (for API access)
-
-## Installation and Setup
-
-1. **Clone the Repository**
-
-   ```bash
-   git clone https://github.com/ItsyBinsy/IPeeps.git
-   cd IPeeps
-   ```
-
-2. **Install Dependencies**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configure API Key**
-   Create a `.env` file in the project root directory and add:
-
-   ```
-   ABSTRACT_API_KEY=your_api_key_here
-   ```
-
-4. **Run the Application**
-
-   ```bash
-   python app.py
-   ```
-
-5. **Access the Web Interface**
-   Open your browser and navigate to:
-
-   ```
-   http://127.0.0.1:5000
-   ```
-
 ## API Reference
 
 **Provider:** [Abstract API - IP Geolocation & Threat Intelligence](https://www.abstractapi.com/ip-geolocation-api)
-**Data Retrieved:**
 
+**Data Retrieved:**
 * IP version, address, continent, country, region, city
 * ISP, ASN, organization, connection type
 * VPN, proxy, relay, and Tor detection
@@ -93,4 +67,3 @@ Built with Flask and the Abstract API, the system demonstrates REST API integrat
 * **Free Trivia API Integration** – Show short trivia facts about countries or IPs for engagement.
 * **Privacy Checker** – Indicate if an IP shows signs of VPN, proxy, or possible tracking exposure.
 * **Network Speed Simulator** – Simulate connection speeds to demonstrate network conditions.
-
