@@ -1,665 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>IPeeps - IPv4 Information Lookup</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            background: #0d0d0d;
-            min-height: 100vh;
-            padding: 20px;
-            color: #00ff41;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            color: #00ff41;
-            margin-bottom: 30px;
-            padding: 25px;
-            border: 2px solid #00ff41;
-            background: rgba(0, 255, 65, 0.08);
-            box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
-        }
-
-        .header h1 {
-            font-size: 2.8em;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(0, 255, 65, 0.8);
-            letter-spacing: 4px;
-        }
-
-        .header p {
-            font-size: 1.15em;
-            color: #00dd33;
-            line-height: 1.6;
-        }
-
-        .main-card {
-            background: #1a1a1a;
-            border-radius: 0;
-            border: 2px solid #00ff41;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.25);
-            overflow: hidden;
-        }
-
-        .controls {
-            background: #151515;
-            padding: 35px;
-            border-bottom: 2px solid #00ff41;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            padding: 14px 35px;
-            border: 2px solid #00ff41;
-            border-radius: 0;
-            font-size: 1.05em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Consolas', 'Monaco', monospace;
-            background: #0d0d0d;
-            color: #00ff41;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .btn:hover {
-            background: #00ff41;
-            color: #000;
-            box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
-        }
-
-        .btn-primary {
-            box-shadow: 0 0 12px rgba(0, 255, 65, 0.35);
-        }
-
-        .btn-secondary {
-            border-color: #00dd33;
-            color: #00dd33;
-        }
-
-        .btn-secondary:hover {
-            background: #00dd33;
-            border-color: #00dd33;
-        }
-
-        .btn-success {
-            border-color: #00bb22;
-            color: #00bb22;
-        }
-
-        .btn-success:hover {
-            background: #00bb22;
-            border-color: #00bb22;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .input-group input {
-            flex: 1;
-            padding: 14px 22px;
-            border: 2px solid #00ff41;
-            border-radius: 0;
-            font-size: 1.05em;
-            transition: all 0.3s ease;
-            background: #0d0d0d;
-            color: #00ff41;
-            font-family: 'Consolas', 'Monaco', monospace;
-            line-height: 1.5;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            box-shadow: 0 0 18px rgba(0, 255, 65, 0.5);
-            background: #000;
-        }
-
-        .input-group input::placeholder {
-            color: #007722;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 50px;
-            display: none;
-            color: #00ff41;
-            font-size: 1.1em;
-        }
-
-        .spinner {
-            border: 4px solid #1a1a1a;
-            border-top: 4px solid #00ff41;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .results {
-            padding: 30px;
-            display: none;
-        }
-
-        .section {
-            margin-bottom: 30px;
-            background: #151515;
-            border-radius: 0;
-            padding: 25px;
-            border: 2px solid #00ff41;
-            box-shadow: 0 0 12px rgba(0, 255, 65, 0.15);
-        }
-
-        .section-title {
-            font-size: 1.4em;
-            font-weight: 700;
-            color: #00ff41;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 15px;
-            background: #0d0d0d;
-            border-radius: 0;
-            border: 1px solid #00ff41;
-            gap: 15px;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #00dd33;
-            font-size: 1.05em;
-        }
-
-        .info-value {
-            color: #00ff41;
-            font-weight: 500;
-            font-size: 1.05em;
-            text-align: right;
-        }
-
-        .security-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 0;
-            font-size: 0.9em;
-            font-weight: 600;
-            border: 1px solid;
-        }
-
-        .badge-clean {
-            background: rgba(0, 255, 65, 0.25);
-            color: #00ff41;
-            border-color: #00ff41;
-        }
-
-        .badge-warning {
-            background: rgba(255, 215, 0, 0.25);
-            color: #ffd700;
-            border-color: #ffd700;
-        }
-
-        .badge-danger {
-            background: rgba(255, 69, 58, 0.25);
-            color: #ff453a;
-            border-color: #ff453a;
-        }
-
-        .alert {
-            padding: 18px 24px;
-            border-radius: 0;
-            margin-bottom: 20px;
-            display: none;
-            border: 2px solid;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 1.05em;
-        }
-
-        .alert-error {
-            background: rgba(255, 69, 58, 0.15);
-            color: #ff6b6b;
-            border-color: #ff453a;
-        }
-
-        .alert-success {
-            background: rgba(0, 255, 65, 0.15);
-            color: #00ff41;
-            border-color: #00ff41;
-        }
-
-        .flag-emoji {
-            font-size: 2em;
-        }
-
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .button-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .input-group {
-                flex-direction: column;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-        }
-
-        /* Matrix-style animation */
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 10px rgba(0, 255, 65, 0.8); }
-            50% { text-shadow: 0 0 25px rgba(0, 255, 65, 1); }
-        }
-
-        .header h1 {
-            animation: glow 2s ease-in-out infinite;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>&#91; IPeeps &#93;</h1>
-            <p>&#62; IPv4 Address Information Lookup Tool</p>
-            <p style="font-size: 0.9em; margin-top: 5px;">&#62; Powered by Abstract API | Group 3 - 4ITH</p>
-        </div>
+<div class="container">
+    <header class="header">
+        <h1>[ IPeeps ]</h1>
+        <p class="subtitle">&gt; We make IPs feel like peeps.</p>
+        <p class="subnote">&gt; Powered by Abstract API | © Group 3 - 4ITH</p>
+    </header>
 
-        <div class="main-card">
-            <div class="controls">
-                <div class="button-group">
-                    <button class="btn btn-primary" onclick="getCurrentIP()">&#91; Get My IP Info &#93;</button>
-                    <button class="btn btn-info" onclick="testConnection()">&#91; Test API Connection &#93;</button>
-                </div>
-
-                <div class="input-group">
-                    <input type="text" id="ipInput" placeholder="&#62; Enter IPv4 address (e.g., 8.8.8.8 or 192.168.1.1)">
-                    <button class="btn btn-secondary" onclick="lookupIP()">&#91; Lookup &#93;</button>
-                </div>
+    <main class="main-card">
+        <section class="controls">
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="getCurrentIP()">[ Get My IP Info ]</button>
+                <button class="btn btn-info" onclick="testConnection()">[ Test API Connection ]</button>
             </div>
 
-            <div class="alert alert-error" id="errorAlert"></div>
-            <div class="alert alert-success" id="successAlert"></div>
+            <div class="input-group">
+                <input type="text" id="ipInput" placeholder="&gt; Enter IPv4 or IPv6 address" />
+                <button class="btn btn-secondary" onclick="lookupIP()">[ Lookup ]</button>
+            </div>
+        </section>
 
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>&#62; Fetching IP information...</p>
+        <div id="errorAlert" class="alert alert-error"></div>
+        <div id="successAlert" class="alert alert-success"></div>
+
+        <section id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>&gt; Fetching IP information...</p>
+        </section>
+
+        <section id="results" class="results">
+            <!-- Basic Info -->
+            <div class="section">
+                <div class="section-title">[ Basic Information ]</div>
+                <div id="basicInfo" class="info-grid"></div>
             </div>
 
-            <div class="results" id="results">
-                <!-- Basic Info -->
-                <div class="section">
-                    <div class="section-title">&#91; Basic Information &#93;</div>
-                    <div class="info-grid" id="basicInfo"></div>
-                </div>
-
-                <!-- Connection Info -->
-                <div class="section">
-                    <div class="section-title">&#91; Connection Information &#93;</div>
-                    <div class="info-grid" id="connectionInfo"></div>
-                </div>
-
-                <!-- Timezone Info -->
-                <div class="section">
-                    <div class="section-title">&#91; Timezone Information &#93;</div>
-                    <div class="info-grid" id="timezoneInfo"></div>
-                </div>
-
-                <!-- Security Info -->
-                <div class="section">
-                    <div class="section-title">&#91; Security Analysis &#93;</div>
-                    <div class="info-grid" id="securityInfo"></div>
-                </div>
-
-                <!-- Currency Info -->
-                <div class="section">
-                    <div class="section-title">&#91; Currency Information &#93;</div>
-                    <div class="info-grid" id="currencyInfo"></div>
-                </div>
-
-                <!-- Flag Info -->
-                <div class="section">
-                    <div class="section-title">&#91; Country Flag &#93;</div>
-                    <div id="flagInfo"></div>
-                </div>
-
-                <div class="export-buttons">
-                    <button class="btn btn-success" onclick="exportJSON()">&#91; Export JSON &#93;</button>
-                    <button class="btn btn-success" onclick="exportText()">&#91; Export Text &#93;</button>
-                </div>
+            <!-- Connection Info -->
+            <div class="section">
+                <div class="section-title">[ Connection Information ]</div>
+                <div id="connectionInfo" class="info-grid"></div>
             </div>
-        </div>
-    </div>
 
-    <script>
-        let currentData = null;
+            <!-- Timezone Info -->
+            <div class="section">
+                <div class="section-title">[ Timezone Information ]</div>
+                <div id="timezoneInfo" class="info-grid"></div>
+            </div>
 
-        function showLoading() {
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            hideAlerts();
-        }
+            <!-- Security Info -->
+            <div class="section">
+                <div class="section-title">[ Security Analysis ]</div>
+                <div id="securityInfo" class="info-grid"></div>
+            </div>
 
-        function hideLoading() {
-            document.getElementById('loading').style.display = 'none';
-        }
+            <!-- Currency Info -->
+            <div class="section">
+                <div class="section-title">[ Currency Information ]</div>
+                <div id="currencyInfo" class="info-grid"></div>
+            </div>
 
-        function showError(message) {
-            const alert = document.getElementById('errorAlert');
-            alert.textContent = '> ERROR: ' + message;
-            alert.style.display = 'block';
-            setTimeout(() => alert.style.display = 'none', 5000);
-        }
+            <!-- Flag Info -->
+            <div class="section">
+                <div class="section-title">[ Country Flag ]</div>
+                <div id="flagInfo"></div>
+            </div>
 
-        function showSuccess(message) {
-            const alert = document.getElementById('successAlert');
-            alert.textContent = '> SUCCESS: ' + message;
-            alert.style.display = 'block';
-            setTimeout(() => alert.style.display = 'none', 3000);
-        }
+            <div class="export-buttons">
+                <button class="btn btn-success" onclick="exportJSON()">[ Export JSON ]</button>
+                <button class="btn btn-success" onclick="exportText()">[ Export Text ]</button>
+            </div>
+        </section>
+    </main>
+</div>
 
-        function hideAlerts() {
-            document.getElementById('errorAlert').style.display = 'none';
-            document.getElementById('successAlert').style.display = 'none';
-        }
-
-        function createInfoItem(label, value, highlight = false) {
-            return `
-                <div class="info-item">
-                    <span class="info-label">${label}:</span>
-                    <span class="info-value" style="${highlight ? 'color: #00ff41; font-weight: 700; text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);' : ''}">${value}</span>
-                </div>
-            `;
-        }
-
-        function displayResults(data) {
-            currentData = data;
-
-            // Basic Info
-            if (data.basic) {
-                const basic = data.basic;
-                document.getElementById('basicInfo').innerHTML = `
-                    ${createInfoItem('IP Address', basic['IP Address'], true)}
-                    ${createInfoItem('IP Version', basic['IP Version'])}
-                    ${createInfoItem('City', basic['City'])}
-                    ${createInfoItem('Region', basic['Region'])}
-                    ${createInfoItem('Country', basic['Country'], true)}
-                    ${createInfoItem('Country Code', basic['Country Code'])}
-                    ${createInfoItem('Continent', basic['Continent'])}
-                    ${createInfoItem('Postal Code', basic['Postal Code'])}
-                    ${createInfoItem('Latitude', basic['Latitude'])}
-                    ${createInfoItem('Longitude', basic['Longitude'])}
-                `;
-            }
-
-            // Connection Info
-            if (data.connection) {
-                const conn = data.connection;
-                document.getElementById('connectionInfo').innerHTML = `
-                    ${createInfoItem('ISP', conn['ISP'], true)}
-                    ${createInfoItem('Organization', conn['Organization'])}
-                    ${createInfoItem('ASN', conn['ASN'])}
-                    ${createInfoItem('ASN Organization', conn['ASN Organization'])}
-                    ${createInfoItem('Connection Type', conn['Connection Type'])}
-                `;
-            }
-
-            // Timezone Info
-            if (data.timezone) {
-                const tz = data.timezone;
-                document.getElementById('timezoneInfo').innerHTML = `
-                    ${createInfoItem('Timezone', tz['Timezone Name'], true)}
-                    ${createInfoItem('Abbreviation', tz['Abbreviation'])}
-                    ${createInfoItem('GMT Offset', tz['GMT Offset'])}
-                    ${createInfoItem('Current Time', tz['Current Time'], true)}
-                    ${createInfoItem('Daylight Saving', tz['Is DST'])}
-                `;
-            }
-
-            // Security Info
-            if (data.security) {
-                const sec = data.security;
-                const threatClass = sec['Threat Level'].includes('Clean') ? 'badge-clean' :
-                                  sec['Threat Level'].includes('Low') ? 'badge-warning' : 'badge-danger';
-
-                document.getElementById('securityInfo').innerHTML = `
-                    ${createInfoItem('VPN Detected', sec['Is VPN'] ? '[!] YES' : '[✓] NO')}
-                    ${createInfoItem('Proxy Detected', sec['Is Proxy'] ? '[!] YES' : '[✓] NO')}
-                    ${createInfoItem('Tor Detected', sec['Is Tor'] ? '[!] YES' : '[✓] NO')}
-                    ${createInfoItem('Relay Detected', sec['Is Relay'] ? '[!] YES' : '[✓] NO')}
-                    <div class="info-item" style="grid-column: 1/-1;">
-                        <span class="info-label">Threat Level:</span>
-                        <span class="security-badge ${threatClass}">${sec['Threat Level']}</span>
-                    </div>
-                `;
-            }
-
-            // Currency Info
-            if (data.currency) {
-                const curr = data.currency;
-                document.getElementById('currencyInfo').innerHTML = `
-                    ${createInfoItem('Currency', curr['Currency Name'], true)}
-                    ${createInfoItem('Code', curr['Currency Code'])}
-                    ${createInfoItem('Symbol', curr['Currency Symbol'])}
-                `;
-            }
-
-            // Flag Info
-            if (data.flag) {
-                const flag = data.flag;
-                document.getElementById('flagInfo').innerHTML = `
-                    <div style="text-align: center; padding: 20px;">
-                        <div class="flag-emoji">${flag['Flag Emoji']}</div>
-                        <p style="margin-top: 10px; color: #00cc00;">Unicode: ${flag['Flag Unicode']}</p>
-                    </div>
-                `;
-            }
-
-            document.getElementById('results').style.display = 'block';
-            showSuccess('Information retrieved successfully!');
-        }
-
-        async function getCurrentIP() {
-            showLoading();
-            try {
-                const response = await fetch('/api/current-ip');
-                const result = await response.json();
-
-                if (result.success) {
-                    hideLoading();
-                    displayResults(result.data);
-                } else {
-                    hideLoading();
-                    showError(result.error || 'Failed to retrieve IP information');
-                }
-            } catch (error) {
-                hideLoading();
-                showError('Network error: ' + error.message);
-            }
-        }
-
-        function validateIPAddress(ip) {
-            // IPv4 only validation
-            // Pattern: xxx.xxx.xxx.xxx where xxx is 0-255
-            const ipv4Pattern = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-
-            // Check for IPv4
-            if (ipv4Pattern.test(ip)) {
-                return { valid: true, type: 'IPv4' };
-            }
-
-            return { valid: false, type: null };
-        }
-
-        async function lookupIP() {
-            const ipInput = document.getElementById('ipInput');
-            const ipAddress = ipInput.value.trim();
-
-            if (!ipAddress) {
-                showError('Please enter an IP address');
-                return;
-            }
-
-            // Validate IP format
-            const validation = validateIPAddress(ipAddress);
-            if (!validation.valid) {
-                showError('Invalid IPv4 address format. Please enter a valid IPv4 address (e.g., 8.8.8.8 or 192.168.1.1).');
-                return;
-            }
-
-            showLoading();
-            try {
-                const response = await fetch('/api/lookup-ip', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ ip_address: ipAddress })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    hideLoading();
-                    displayResults(result.data);
-                } else {
-                    hideLoading();
-                    showError(result.error || 'Failed to lookup IP address');
-                }
-            } catch (error) {
-                hideLoading();
-                showError('Network error: ' + error.message);
-            }
-        }
-
-        function exportJSON() {
-            if (!currentData) {
-                showError('No data available to export');
-                return;
-            }
-
-            const dataStr = JSON.stringify(currentData, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `ip_info_${new Date().getTime()}.json`;
-            link.click();
-            URL.revokeObjectURL(url);
-            showSuccess('JSON file downloaded!');
-        }
-
-        function exportText() {
-            if (!currentData) {
-                showError('No data available to export');
-                return;
-            }
-
-            let text = '='.repeat(80) + '\n';
-            text += 'IP ADDRESS INFORMATION REPORT\n';
-            text += '='.repeat(80) + '\n\n';
-
-            for (const [category, data] of Object.entries(currentData)) {
-                text += `\n> ${category.toUpperCase()}\n`;
-                text += '-'.repeat(60) + '\n';
-                for (const [key, value] of Object.entries(data)) {
-                    text += `${key.padEnd(25, '.')} ${value}\n`;
-                }
-            }
-
-            text += '\n' + '='.repeat(80) + '\n';
-            text += `Report generated at: ${new Date().toLocaleString()}\n`;
-
-            const dataBlob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `ip_info_${new Date().getTime()}.txt`;
-            link.click();
-            URL.revokeObjectURL(url);
-            showSuccess('Text file downloaded!');
-        }
-
-        // Allow Enter key to trigger lookup
-        document.getElementById('ipInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                lookupIP();
-            }
-        });
-
-        async function testConnection() {
-            showLoading();
-            try {
-                const response = await fetch('/api/test-connection');
-                const result = await response.json();
-
-                hideLoading();
-
-                if (result.success) {
-                    showSuccess(result.message || 'API connection successful!');
-                } else {
-                    showError(result.message || 'API connection failed');
-                }
-            } catch (error) {
-                hideLoading();
-                showError('Network error: ' + error.message);
-            }
-        }
-    </script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
