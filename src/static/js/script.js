@@ -248,6 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ipInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') lookupIP();
     });
+    
+    // Auto-detect and display current IP on page load
+    getCurrentIP();
 });
 
 async function testConnection() {
